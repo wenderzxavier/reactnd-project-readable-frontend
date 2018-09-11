@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar';
-import CardGrid from './CardGrid';
-import AddPost from './AddPost';
+import Navbar from '../components/Navbar';
+import CardGrid from '../components/CardGrid';
+import AddPost from '../components/AddPost';
 import '../styles/App.css';
-
-
 
 class App extends Component {
   render() {

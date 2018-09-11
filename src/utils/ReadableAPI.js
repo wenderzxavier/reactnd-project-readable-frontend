@@ -33,7 +33,7 @@ export const addPost = (postData) =>
             ...headers,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(postData)
+        body: JSON.stringify( postData )
     })
         .then((res) => res.json())
         .catch((err) => console.log(err))

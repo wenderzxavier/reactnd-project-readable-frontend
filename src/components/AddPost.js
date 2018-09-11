@@ -55,13 +55,19 @@ const styles = theme => ({
     },
 
     title: {
-        margin: 15,
-        size: 15,
+        margin: 25,
+        fontSize: 30,
+        fontFamily: 'Raleway' 
     }
 })
 
 
 class AddPost extends Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
     state = {
         modalIsOpen: false,
         uuid: "",
@@ -72,7 +78,7 @@ class AddPost extends Component {
 
     }
 
-    openModal = () =>{
+    openModal = () => {
         this.setState({
             modalIsOpen: true,
             uuid: uuidv3(),
@@ -83,7 +89,25 @@ class AddPost extends Component {
         })
     }
 
-    closeModal = () =>{
+    handleSubmit = (evt) => {
+        if(!evt.target.checkValidity()){
+            alert('Some fields are missing or contain invalid data. Try again!')
+            this.closeModal();
+        }
+        evt.preventDefault();
+        addPost({
+            id: this.state.uuid,
+            timestamp: Date.now(),
+            title: this.state.title,
+            body: this.state.body,
+            author: this.state.author,
+            category: this.state.category
+        });
+        console.log("Enviando Post");
+        this.closeModal();
+    }
+
+    closeModal = () => {
         this.setState({
             modalIsOpen: false,
         })
@@ -95,7 +119,7 @@ class AddPost extends Component {
 
     render() {
         const { classes } = this.props;
-        const { modalIsOpen, uuid, author, title, category, body } = this.state;
+        const { modalIsOpen, uuid } = this.state;
         return (
             <div>
                 <Modal
@@ -116,7 +140,7 @@ class AddPost extends Component {
                         </Button>
                     </div>
                     <div>
-                        <form className={classes.container} autoComplete="off">
+                        <form id="addPostForm" className={classes.container} action="/" autoComplete="off" method="POST" onSubmit={(evt) => { this.handleSubmit(evt) }}>
                             <TextField
                                 id="uuid"
                                 label="UUID"
@@ -130,7 +154,7 @@ class AddPost extends Component {
                                 id="author"
                                 label="Author Name"
                                 className={classes.textField}
-                                onChange={(evt) => this.setState({ author : evt.target.value })}
+                                onChange={(evt) => this.setState({ author: evt.target.value })}
                                 placeholder="Name"
                                 margin="normal"
                                 required
@@ -139,7 +163,7 @@ class AddPost extends Component {
                                 id="title"
                                 label="Title"
                                 className={classes.textField}
-                                onChange={(evt) => this.setState({ title : evt.target.value })}
+                                onChange={(evt) => this.setState({ title: evt.target.value })}
                                 placeholder="Title"
                                 margin="normal"
                                 required
@@ -148,10 +172,8 @@ class AddPost extends Component {
                                 id="category"
                                 select
                                 label="Category"
-                                onChange={(evt) => this.setState({ category : evt.target.value })}
+                                onChange={(evt) => this.setState({ category: evt.target.value })}
                                 className={classes.textField}
-                                //                            value={this.state.currency}
-                                //                            onChange={this.handleChange('currency')}
                                 SelectProps={{
                                     native: true,
                                     MenuProps: {
@@ -170,7 +192,7 @@ class AddPost extends Component {
                             <TextField
                                 id="body"
                                 label="Body"
-                                onChange={(evt) => this.setState({ body : evt.target.value })}
+                                onChange={(evt) => this.setState({ body: evt.target.value })}
                                 placeholder="Post Body"
                                 className={classes.textBody}
                                 multiline={true}
@@ -179,25 +201,21 @@ class AddPost extends Component {
                                 fullWidth
                                 required
                             ></TextField>
+                            <div className={classes.action}>
+                                <Button variant="contained" size="medium" color="default" className={classes.iconRight} aria-label="cancel" onClick={() => this.closeModal()}>
+                                    Cancel
+                                </Button>
+                                <Button variant="contained" size="medium" type="submit" color="primary" aria-label="Close">
+                                    Create Post
+                                </Button>
+                            </div>
                         </form>
-                    </div>
-                    <div className={classes.action}>
-                        <Button variant="contained" size="medium" color="default" className={classes.iconRight} aria-label="cancel" onClick={() => this.closeModal()}>
-                            Cancel
-                        </Button>
-                        <Button variant="contained" size="medium" type="submit" color="primary" aria-label="Close" onClick={() => {
-                            const date = Date.now();
-                            addPost({id: uuid, timestamp: date, title: title, body: body, author: author, category: category}).then((rep) => console.log(rep))
-                            this.closeModal()
-                        }}>
-                            Create Post
-                        </Button>
                     </div>
                 </Modal>
                 <Button variant="fab" color="primary" className={classes.iconAdd} aria-label="Add" onClick={() => this.openModal()}>
                     <AddIcon />
                 </Button>
-            </div>
+            </div >
         )
     }
 }
