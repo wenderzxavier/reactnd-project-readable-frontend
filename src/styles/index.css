@@ -27,3 +27,7 @@ body {
 form{
   margin: 0 auto;
 }
+
+.divPost:hover{
+  cursor: pointer;
+}

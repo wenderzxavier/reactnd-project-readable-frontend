@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 //import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import '../styles/index.css'
 
 const styles = {
     card: {
@@ -26,6 +27,7 @@ const styles = {
     comment: {
         marginTop: 12,
     }
+
 }
 
 
@@ -33,25 +35,27 @@ class PostCard extends Component {
     render() {
         const { classes, post } = this.props;
         return (
-            <Card className={classes.card}>
-                <CardContent>
-                    <Typography className={classes.title} color="textSecondary">
-                        {post.category.toUpperCase()}
+            <div className="divPost" onClick={() => {console.log("Clicked")}}>
+                <Card className={classes.card}>
+                    <CardContent>
+                        <Typography className={classes.title} color="textSecondary">
+                            {post.category.toUpperCase()}
+                        </Typography>
+                        <Typography variant="headline" component="h2">
+                            {post.title}
+                        </Typography>
+                        <Typography className={classes.pos} color="textSecondary">
+                            {post.author} | {new Date(post.timestamp * 1e3).toString().slice(0, 10)}
+                        </Typography>
+                        <Typography component="p">
+                            {post.body}
+                        </Typography>
+                        <Typography className={classes.comment} color="textSecondary">
+                            Comments ({post.commentCount})
                     </Typography>
-                    <Typography variant="headline" component="h2">
-                        {post.title}
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary">
-                        {post.author} | {new Date(post.timestamp * 1e3).toString().slice(0,10)}
-                    </Typography>
-                    <Typography component="p">
-                        {post.body}
-                    </Typography>
-                    <Typography className={classes.comment} color="textSecondary">
-                        Comments ({post.commentCount})
-                    </Typography>
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            </div>
         );
     }
 }
