@@ -30,14 +30,17 @@ class CardGrid extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, category } = this.props;
         const { posts } = this.state;
-        console.log(posts);
+        let postsToShow = {};
+        if( category !== "" ){
+            postsToShow = posts.filter((item) => item.category === category )
+        } else postsToShow = posts
         return (
             <div>
                 <Grid container className={classes.root} justify="center">
-                    {posts.length <= 0 ? <p>No posts to show.</p> : (
-                        posts.map((item, key) => {
+                    {postsToShow.length <= 0 ? <p>No posts to show.</p> : (
+                        postsToShow.map((item, key) => {
                             return (
                                 <PostCard key={key} post={item}></PostCard>
                             )
