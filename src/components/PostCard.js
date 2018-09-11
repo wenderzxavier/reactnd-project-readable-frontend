@@ -35,7 +35,7 @@ class PostCard extends Component {
         const { classes, post } = this.props;
         return (
             <Link style={{ textDecoration: 'none' }} to={"/posts/" + post.id}>
-                <div className="divPost" onClick={() => { console.log("Clicked") }}>
+                <div className="divPost">
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography className={classes.title} color="textSecondary">

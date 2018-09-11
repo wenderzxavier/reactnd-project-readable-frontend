@@ -25,10 +25,10 @@ class App extends Component {
             <AddPost></AddPost>
           </div>
         )} />
-        <Route exact path={"/posts/:id"} render={() => (
+        <Route exact path={"/posts/:id"} render={({match}) => (
           <div>
             <Navbar></Navbar>
-            <Post></Post>
+            <Post id={match.params.id}></Post>
             <AddComment></AddComment>
           </div>
         )}/>
