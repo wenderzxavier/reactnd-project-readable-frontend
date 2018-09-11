@@ -47,13 +47,13 @@ class Navbar extends Component {
             {categories.length > 0 ?
               (categories.map((item, key) => {
                 return (
-                  <Link key={key} style={{ textDecoration: 'none', color: 'white' }} to={"/" + item.name}>
+                  <Link key={key} style={{ textDecoration: 'none', color: 'white' }} to={"/" + item.name + "/posts"}>
                     <Button color="inherit" >{item.name}</Button>
                   </Link>
                 )
               }))
               :
-              (<Typography variant="title" color="inherit">No categories available.</Typography>)}
+              (<Typography variant="subheading" color="inherit">Loading Categories.</Typography>)}
           </Toolbar>
         </AppBar>
       </div>

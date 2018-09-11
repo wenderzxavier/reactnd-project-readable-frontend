@@ -18,14 +18,14 @@ class App extends Component {
             <AddPost></AddPost>
           </div>
         )} />
-        <Route exact path={"/:category"} render={({match}) => (
+        <Route exact path={"/:category/posts"} render={({match}) => (
           <div>
             <Navbar></Navbar>
             <CardGrid category={match.params.category}></CardGrid>
             <AddPost></AddPost>
           </div>
         )} />
-        <Route exact path={"/:category/:post"} render={() => (
+        <Route exact path={"/posts/:id"} render={() => (
           <div>
             <Navbar></Navbar>
             <Post></Post>
