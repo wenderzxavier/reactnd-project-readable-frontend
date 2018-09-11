@@ -5,9 +5,10 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import logo from '../logo.svg';
-import { getAllCat } from '../utils/ReadableAPI'
-import '../styles/App.css';
+import { Link } from 'react-router-dom';
+import { getAllCat } from '../utils/ReadableAPI';
 import PropTypes from 'prop-types';
+import '../styles/App.css';
 
 const styles = {
   flex: {
@@ -40,11 +41,15 @@ class Navbar extends Component {
             <Typography variant="title" color="inherit" className={classes.flex}>
               React Forums
             </Typography>
-            <Button color="inherit">Home</Button>
+            <Link style={{ textDecoration: 'none', color: 'white' }} to={"/"}>
+              <Button color="inherit">Home</Button>
+            </Link>
             {categories.length > 0 ?
               (categories.map((item, key) => {
                 return (
-                  <Button key={key} color="inherit" >{item.name}</Button>
+                  <Link key={key} style={{ textDecoration: 'none', color: 'white' }} to={"/" + item.name}>
+                    <Button color="inherit" >{item.name}</Button>
+                  </Link>
                 )
               }))
               :

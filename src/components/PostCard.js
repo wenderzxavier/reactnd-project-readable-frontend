@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-//import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import '../styles/index.css'
+import { Link } from 'react-router-dom';
 
 const styles = {
     card: {
@@ -35,27 +34,29 @@ class PostCard extends Component {
     render() {
         const { classes, post } = this.props;
         return (
-            <div className="divPost" onClick={() => {console.log("Clicked")}}>
-                <Card className={classes.card}>
-                    <CardContent>
-                        <Typography className={classes.title} color="textSecondary">
-                            {post.category.toUpperCase()}
-                        </Typography>
-                        <Typography variant="headline" component="h2">
-                            {post.title}
-                        </Typography>
-                        <Typography className={classes.pos} color="textSecondary">
-                            {post.author} | {new Date(post.timestamp * 1e3).toString().slice(0, 10)}
-                        </Typography>
-                        <Typography component="p">
-                            {post.body}
-                        </Typography>
-                        <Typography className={classes.comment} color="textSecondary">
-                            Comments ({post.commentCount})
+            <Link style={{ textDecoration: 'none' }} to={"/" + post.category + "/" + post.id}>
+                <div className="divPost" onClick={() => { console.log("Clicked") }}>
+                    <Card className={classes.card}>
+                        <CardContent>
+                            <Typography className={classes.title} color="textSecondary">
+                                {post.category.toUpperCase()}
+                            </Typography>
+                            <Typography variant="headline" component="h2">
+                                {post.title}
+                            </Typography>
+                            <Typography className={classes.pos} color="textSecondary">
+                                {post.author} | {new Date(post.timestamp * 1e3).toString().slice(0, 10)}
+                            </Typography>
+                            <Typography component="p">
+                                {post.body}
+                            </Typography>
+                            <Typography className={classes.comment} color="textSecondary">
+                                Comments ({post.commentCount})
                     </Typography>
-                    </CardContent>
-                </Card>
-            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+            </Link>
         );
     }
 }
