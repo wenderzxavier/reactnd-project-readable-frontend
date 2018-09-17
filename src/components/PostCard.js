@@ -69,7 +69,6 @@ class PostCard extends Component {
                                     <Typography className={classes.pos} color="textSecondary">
                                         Vote Score: {post.voteScore}
                                     </Typography>
-
                                 </div>
                             </div>
                             <Typography variant="headline" component="h2">

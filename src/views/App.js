@@ -3,7 +3,6 @@ import Navbar from '../components/Navbar';
 import CardGrid from '../components/CardGrid';
 import Post from './Post';
 import AddPost from '../components/AddPost';
-import AddComment from '../components/AddComment'
 import { Route } from 'react-router-dom';
 import '../styles/App.css';
 
@@ -29,7 +28,6 @@ class App extends Component {
           <div>
             <Navbar></Navbar>
             <Post id={match.params.id}></Post>
-            <AddComment></AddComment>
           </div>
         )}/>
       </div>
