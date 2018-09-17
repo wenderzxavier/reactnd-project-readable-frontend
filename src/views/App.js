@@ -3,7 +3,7 @@ import '../styles/App.css';
 import { fetchPosts, fetchComments } from "../actions"
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import RootFeed from '../component/RootFeed'
+import AllCategories from '../component/AllCategories'
 import Category from '../components/Category'
 import AddPost from '../components/AddPost'
 import EditPost from '../components/EditPost'
@@ -33,7 +33,7 @@ class App extends Component {
       <div className="App">
           <Switch>
         <Route exact path="/" render={() => (
-            <RootFeed flag={this.state.flag} />
+            <AllCategories flag={this.state.flag} />
         )} />
           <Route exact path="/addpost" render={() => (
               <AddPost />
