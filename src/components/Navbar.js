@@ -37,7 +37,7 @@ class Navbar extends Component {
       <div>
         <AppBar position="static">
           <Toolbar>
-            <img src={logo} className="App-logo d-inline-block align-top" width="60" alt="logo" />
+            <img src={logo} className="App-logo" width="60" alt="logo" />
             <Typography variant="title" color="inherit" className={classes.flex}>
               React Forums
             </Typography>
