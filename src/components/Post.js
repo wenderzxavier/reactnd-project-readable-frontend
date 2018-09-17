@@ -3,7 +3,7 @@ import { Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText } f
 import { connect } from 'react-redux';
 import Timestamp from 'react-timestamp';
 import { withRouter, Link } from 'react-router-dom'
-import { updateVote, fetchComments, fetchPosts, deletePostRedux } from '../Actions'
+import { updateVote, fetchComments, fetchPosts, deletePostRedux } from '../actions'
 
 class Post extends Component {
     componentWillMount() {
