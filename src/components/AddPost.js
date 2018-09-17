@@ -1,223 +1,141 @@
-import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import Modal from 'react-modal';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import CloseIcon from '@material-ui/icons/HighlightOff';
+import React from 'react';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import Navigation from './Navigation'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { addPostRedux } from '../actions'
 import uuidv3 from 'uuid';
-import { addPost } from '../utils/ReadableAPI';
-import { Typography } from '@material-ui/core';
 
-
-const styles = theme => ({
-    iconAdd: {
-        position: 'absolute',
-        bottom: theme.spacing.unit * 4,
-        right: theme.spacing.unit * 4,
-    },
-
-    action: {
-        position: 'absolute',
-        bottom: theme.spacing.unit * 4,
-        right: theme.spacing.unit * 4,
-    },
-
-    iconRight: {
-        marginRight: 12,
-    },
-
-    iconClose: {
-        position: 'absolute',
-        top: theme.spacing.unit * 4,
-        right: theme.spacing.unit * 4,
-    },
-
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        margin: 15
-    },
-
-    textField: {
-        marginLeft: theme.spacing.unit * 1.5,
-        marginRight: theme.spacing.unit * 1.5,
-        width: 300,
-    },
-
-    textBody: {
-        marginLeft: theme.spacing.unit * 1.5,
-        marginRight: theme.spacing.unit * 1.5,
-    },
-
-    menu: {
-        width: 300
-    },
-
-    title: {
-        margin: 25,
-        fontSize: 30,
-        fontFamily: 'Raleway' 
-    }
-})
-
-
-class AddPost extends Component {
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
+class AddPost extends React.Component {
     state = {
-        modalIsOpen: false,
-        uuid: "",
-        category: "",
-        body: "",
-        title: "",
-        author: "",
-
+        title: '',
+        body: '',
+        author: '',
+        category: '',
+        titleValid: false,
+        bodyValid: false,
+        authorValid: false,
+        categoryValid: false
     }
-
-    openModal = () => {
-        this.setState({
-            modalIsOpen: true,
-            uuid: uuidv3(),
-            category: "react",
-            body: "",
-            title: "",
-            author: ""
-        })
-    }
-
-    handleSubmit = (evt) => {
-        if(!evt.target.checkValidity()){
-            alert('Some fields are missing or contain invalid data. Try again!')
-            this.closeModal();
+    handleSubmit = (e) => {
+        e.preventDefault()
+        const post = this.state
+        post.timestamp = Date.now()
+        post.id = uuidv3();
+        post.voteScore = 0;
+        const valid = this.state.titleValid && this.state.bodyValid && this.state.authorValid && this.state.categoryValid;
+        if(valid) {
+            this.props.dispatch(addPostRedux(post));
+            this.props.history.push("/")
         }
-        evt.preventDefault();
-        addPost({
-            id: this.state.uuid,
-            timestamp: Date.now(),
-            title: this.state.title,
-            body: this.state.body,
-            author: this.state.author,
-            category: this.state.category
-        });
-        console.log("Enviando Post");
-        this.closeModal();
     }
-
-    closeModal = () => {
-        this.setState({
-            modalIsOpen: false,
-        })
+    handleTitleChange = (e) => {
+        if(e.target.value) {
+            this.setState({
+                title: e.target.value,
+                titleValid: true
+            })
+        }
+        else {
+            this.setState({
+                title: e.target.value,
+                titleValid: false
+            })
+        }
     }
-
-    componentWillMount() {
-        Modal.setAppElement('body');
+    handleBodyChange = (e) => {
+        if(e.target.value) {
+            this.setState({
+                body: e.target.value,
+                bodyValid: true
+            })
+        }
+        else {
+            this.setState({
+                body: e.target.value,
+                bodyValid: false
+            })
+        }
     }
-
+    handleAuthorChange = (e) => {
+        if(e.target.value) {
+            this.setState({
+                author: e.target.value,
+                authorValid: true
+            })
+        }
+        else {
+            this.setState({
+                author: e.target.value,
+                authorValid: false
+            })
+        }
+    }
+    handleCategoryChange = (e) => {
+        if(e.target.value) {
+            this.setState({
+                category: e.target.value,
+                categoryValid: true
+            })
+        }
+        else {
+            this.setState({
+                category: e.target.value,
+                categoryValid: false
+            })
+        }
+    }
     render() {
-        const { classes } = this.props;
-        const { modalIsOpen, uuid } = this.state;
+        let { categories } = this.props
         return (
             <div>
-                <Modal
-                    className='modal'
-                    overlayClassName='overlay'
-                    isOpen={modalIsOpen}
-                    onAfterOpen={this.openModal}
-                    onRequestClose={this.closeModal}
-                    ariaHideApp={false}
-                    contentLabel='Modal'
-                >
-                    <div>
-                        <Typography variant="title" align="center" className={classes.title}>
-                            Add New Post
-                        </Typography>
-                        <Button variant="fab" color="default" className={classes.iconClose} aria-label="Close" onClick={() => this.closeModal()}>
-                            <CloseIcon />
-                        </Button>
+                <Navigation />
+                <div className="page-section">
+                    <div className="page-top">
+                        <h1 className="page-header">Add a Post</h1>
                     </div>
-                    <div>
-                        <form id="addPostForm" className={classes.container} action="/" autoComplete="off" method="POST" onSubmit={(evt) => { this.handleSubmit(evt) }}>
-                            <TextField
-                                id="uuid"
-                                label="UUID"
-                                className={classes.textField}
-                                value={uuid}
-                                placeholder="UUID"
-                                margin="normal"
-                                disabled
-                            ></TextField>
-                            <TextField
-                                id="author"
-                                label="Author Name"
-                                className={classes.textField}
-                                onChange={(evt) => this.setState({ author: evt.target.value })}
-                                placeholder="Name"
-                                margin="normal"
-                                required
-                            ></TextField>
-                            <TextField
-                                id="title"
-                                label="Title"
-                                className={classes.textField}
-                                onChange={(evt) => this.setState({ title: evt.target.value })}
-                                placeholder="Title"
-                                margin="normal"
-                                required
-                            ></TextField>
-                            <TextField
-                                id="category"
-                                select
-                                label="Category"
-                                onChange={(evt) => this.setState({ category: evt.target.value })}
-                                className={classes.textField}
-                                SelectProps={{
-                                    native: true,
-                                    MenuProps: {
-                                        className: classes.menu,
-                                    },
-                                }}
-                                helperText="Select the category"
-                                margin="normal"
-                            >
-                                {['react', 'redux', 'udacity'].map((option, key) => (
-                                    <option key={key} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
-                            <TextField
-                                id="body"
-                                label="Body"
-                                onChange={(evt) => this.setState({ body: evt.target.value })}
-                                placeholder="Post Body"
-                                className={classes.textBody}
-                                multiline={true}
-                                rows={5}
-                                margin="normal"
-                                fullWidth
-                                required
-                            ></TextField>
-                            <div className={classes.action}>
-                                <Button variant="contained" size="medium" color="default" className={classes.iconRight} aria-label="cancel" onClick={() => this.closeModal()}>
-                                    Cancel
-                                </Button>
-                                <Button variant="contained" size="medium" type="submit" color="primary" aria-label="Close">
-                                    Create Post
-                                </Button>
-                            </div>
-                        </form>
-                    </div>
-                </Modal>
-                <Button variant="fab" color="primary" className={classes.iconAdd} aria-label="Add" onClick={() => this.openModal()}>
-                    <AddIcon />
-                </Button>
-            </div >
-        )
+                    <Form className="post-form" onSubmit={this.handleSubmit}>
+                        <FormGroup>
+                            <Label for="title" className="label-name">Title</Label>
+                            <Input valid={this.state.titleValid} type="text" name="title" id="title" placeholder="Enter title" value={this.state.title} onChange={this.handleTitleChange} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="body" className="label-name">Body</Label>
+                            <Input valid={this.state.bodyValid} type="textarea" name="body" id="body" placeholder="Enter text" value={this.state.body} onChange={this.handleBodyChange} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="body" className="label-name">Author</Label>
+                            <Input valid={this.state.authorValid} type="text" name="author" id="author" placeholder="Enter author name" value={this.state.author} onChange={this.handleAuthorChange} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="categorySelect" className="label-name">Category</Label>
+                                <Input valid={this.state.categoryValid} type="select" name="select" id="categorySelect" value={this.state.category} onChange={this.handleCategoryChange}>
+                                    <option></option>
+                                    {categories && categories.map(function (category) {
+                                        return (<option key={category.name}>{category.name}</option>)
+                                    })}
+                                </Input>
+                        </FormGroup>
+
+                        <Button id="form-submit-btn">Submit</Button>
+                    </Form>
+                </div>
+            </div>
+        );
     }
 }
 
-export default withStyles(styles)(AddPost);
+function mapStateToProps(data) {
+    if (data.categories) {
+        return {
+            categories: data.categories.categories
+        }
+    }
+    else {
+        return {
+            categories: data.categories
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(AddPost))
