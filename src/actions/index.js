@@ -23,7 +23,7 @@ export const receivePosts = posts => ({
     posts
 });
 
-export function fetchP () {
+export function fetchPOSTS () {
 
     return function (dispatch) {
         return getAllPosts().then(
@@ -45,7 +45,7 @@ export const receiveCategories = categories => ({
 });
 
 
-export function fetchC () {
+export function fetchComments () {
 
     return function (dispatch) {
         return getAllCat().then(

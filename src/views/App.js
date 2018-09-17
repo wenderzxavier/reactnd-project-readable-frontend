@@ -1,38 +1,80 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
-import CardGrid from '../components/CardGrid';
-import Post from '../components/Post';
-import AddPost from '../components/AddPost';
-import { Route } from 'react-router-dom';
 import '../styles/App.css';
+import { fetchPosts, fetchComments } from "../actions"
+import { connect } from 'react-redux'
+import { Route, Switch } from 'react-router-dom'
+import RootFeed from '../component/RootFeed'
+import Category from '../components/Category'
+import AddPost from '../components/AddPost'
+import EditPost from '../components/EditPost'
+import DetailedPost from '../components/DetailedPost'
+import { withRouter } from 'react-router-dom'
+
 
 class App extends Component {
+    state = {
+        flag: false,
+    }
+    componentWillMount () {
+        this.getData()
+    }
+    getData = () => {
+        this.props.dispatch(fetchPosts())
+        this.props.dispatch(fetchComments())
+        this.setState({
+            flag: true
+        })
+    }
+
   render() {
+      const { categories, posts } = this.props
+
     return (
-      <div>
+      <div className="App">
+          <Switch>
         <Route exact path="/" render={() => (
-          <div>
-            <Navbar></Navbar>
-            <CardGrid category=""></CardGrid>
-            <AddPost></AddPost>
-          </div>
+            <RootFeed flag={this.state.flag} />
         )} />
-        <Route exact path={"/:category/posts"} render={({match}) => (
-          <div>
-            <Navbar></Navbar>
-            <CardGrid category={match.params.category}></CardGrid>
-            <AddPost></AddPost>
-          </div>
-        )} />
-        <Route exact path={"/posts/:id"} render={({match}) => (
-          <div>
-            <Navbar></Navbar>
-            <Post id={match.params.id}></Post>
-          </div>
-        )}/>
+          <Route exact path="/addpost" render={() => (
+              <AddPost />
+          )} />
+          {(posts)&&(posts.map((post) => (
+                  <Route key={post.id} exact path={`/${post.category}/${post.id}/edit`} render={() => (
+                      <EditPost value={post.id} />
+                  )} />
+              ))
+          )}
+          {(posts)&&(posts.map((post) => (
+                  <Route key={post.id} exact path={`/${post.category}/${post.id}`} render={() => (
+                      <DetailedPost value={post.id} />
+                  )} />
+              ))
+          )}
+          {(categories)&&(categories.map((category) => (
+                  <Route key={category.name} exact path={`/${category.path}`} render={() => (
+                      <Category value={category.name} flag={this.state.flag} />
+                  )} />
+              ))
+          )}
+          </Switch>
       </div>
     )
   }
 }
 
-export default App;
+function mapStateToProps(data) {
+    if(data.categories) {
+        return {
+            categories: data.categories.categories,
+            posts: data.posts
+        }
+    }
+    else {
+        return {
+            categories: data.categories,
+            posts: data.posts
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(App))
