@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import { getPost, getAllComments, editPost, editComment, delPost, delComment } from '../utils/ReadableAPI';
+import { getPost, getAllComments, editPost, editComment, delPost, delComment, setCommentVote } from '../utils/ReadableAPI';
 import AddComment from '../components/AddComment';
 
 import ListItemText from '@material-ui/core/ListItemText';
@@ -33,13 +33,15 @@ const styles = theme => ({
     },
     commentUpvote: {
         '&:hover': {
-            color: blue[600]
+            color: blue[600],
+            cursor: 'pointer'
         },
     },
     commentDownvote: {
         marginLeft: 10,
         '&:hover': {
-            color: red[600]
+            color: red[600],
+            cursor: 'pointer'
         },
     },
     edit: {
@@ -146,10 +148,10 @@ class Post extends Component {
         }
         evt.preventDefault();
         if (this.state.modalType === 'post') {
-            editPost(this.state.postId, this.state.body).then((res) => console.log("Editei meu Post"));
+            editPost(this.state.postId, this.state.body);
         }
         else {
-            editComment(Date.now(), this.state.body).then((res) => console.log("Editei meu Comment"));
+            editComment(Date.now(), this.state.body);
         }
         this.closeModal();
     }
@@ -345,8 +347,8 @@ class Post extends Component {
                                         <ListItemText primary={comment.body} />
                                     </div>
                                     <div className={classes.flex}>
-                                        <ThumbUp color="action" className={classes.commentUpvote} />
-                                        <ThumbDown color="action" className={classes.commentDownvote} />
+                                        <ThumbUp color="action" className={classes.commentUpvote} onClick={() => setCommentVote(comment.id, "upVote")}/>
+                                        <ThumbDown color="action" className={classes.commentDownvote} onClick={() => setCommentVote(comment.id, "downVote")}/>
                                         <Typography color="textSecondary" style={{ marginLeft: 15 }}>
                                             Vote Score: {comment.voteScore}
                                         </Typography>

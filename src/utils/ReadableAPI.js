@@ -33,7 +33,7 @@ export const addPost = (postData) =>
             ...headers,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify( postData )
+        body: JSON.stringify(postData)
     })
         .then((res) => res.json())
         .catch((err) => console.log(err))
@@ -48,11 +48,13 @@ export const setPostVote = (id, vote) =>
         method: 'POST',
         headers: {
             ...headers,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json, text/plain, */*',
         },
-        body: JSON.stringify(vote)
+        body: JSON.stringify({ 'option': vote })
     })
-        .then((res) => res.json())
+        .then((res) => { res.json() })
+        .then(data => data)
         .catch((err) => console.log(err))
 
 export const editPost = (id, data) =>
@@ -106,7 +108,7 @@ export const setCommentVote = (id, vote) =>
             ...headers,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(vote)
+        body: JSON.stringify({ 'option': vote })
     })
         .then((res) => res.json())
         .catch((err) => console.log(err))
@@ -116,7 +118,8 @@ export const editComment = (id, data) =>
         method: 'PUT',
         headers: {
             ...headers,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json, text/plain, */*'
         },
         body: JSON.stringify(data)
     })

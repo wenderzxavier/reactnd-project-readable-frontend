@@ -48,7 +48,7 @@ const styles = {
 class PostCard extends Component {
     handleVote = (evt, id, vote) => {
         evt.preventDefault();
-        setPostVote({id, vote});
+        setPostVote(id, vote);
     }
 
 
