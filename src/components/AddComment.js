@@ -74,7 +74,6 @@ class AddComment extends Component {
         parentId: "",
         body: "",
         author: "",
-
     }
 
     openModal = () => {

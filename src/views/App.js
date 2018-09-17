@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from '../components/Navbar';
 import CardGrid from '../components/CardGrid';
-import Post from './Post';
+import Post from '../components/Post';
 import AddPost from '../components/AddPost';
 import { Route } from 'react-router-dom';
 import '../styles/App.css';
