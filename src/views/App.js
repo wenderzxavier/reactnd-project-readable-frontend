@@ -3,7 +3,7 @@ import '../styles/App.css';
 import { fetchPosts, fetchComments } from "../actions"
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import AllCategories from '../component/AllCategories'
+import AllCategories from '../components/AllCategories';
 import Category from '../components/Category'
 import AddPost from '../components/AddPost'
 import EditPost from '../components/EditPost'

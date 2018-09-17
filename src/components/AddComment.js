@@ -12,6 +12,7 @@ class AddComment extends Component {
         bodyValid: false,
         authorValid: false,
     }
+
     handleSubmit = (e) => {
         e.preventDefault()
         const comment = this.state
@@ -29,6 +30,7 @@ class AddComment extends Component {
             })
         }
     }
+
     handleBodyChange = (e) => {
         if (e.target.value) {
             this.setState({
@@ -43,6 +45,7 @@ class AddComment extends Component {
             })
         }
     }
+
     handleAuthorChange = (e) => {
         if (e.target.value) {
             this.setState({
@@ -75,6 +78,5 @@ class AddComment extends Component {
         );
     }
 }
-
 
 export default withRouter(connect()(AddComment))

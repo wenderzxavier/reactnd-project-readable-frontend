@@ -1,31 +1,40 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import Navbar from './Navbar';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { addPostRedux } from '../actions';
-import uuidv3 from 'uuid';
+import Navbar from './Navbar'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { updatePost } from '../actions'
+import { getPost } from "../utils/ReadableAPI";
 
-class AddPost extends React.Component {
+class EditPost extends React.Component {
     state = {
         title: '',
         body: '',
         author: '',
         category: '',
-        titleValid: false,
-        bodyValid: false,
-        authorValid: false,
-        categoryValid: false
+        titleValid: true,
+        bodyValid: true,
+        id: this.props.value
     }
+
+    componentDidMount() {
+        getPost(this.state.id).then(response => this.setState({
+            title: response.title,
+            body: response.body,
+            author: response.author,
+            category: response.category,
+        }))
+    }
+
     handleSubmit = (e) => {
         e.preventDefault()
-        const post = this.state
-        post.timestamp = Date.now()
-        post.id = uuidv3();
-        post.voteScore = 0;
-        const valid = this.state.titleValid && this.state.bodyValid && this.state.authorValid && this.state.categoryValid;
+        const post = {
+            title: this.state.title,
+            body: this.state.body
+        }
+        const valid = this.state.titleValid && this.state.bodyValid
         if(valid) {
-            this.props.dispatch(addPostRedux(post));
+            this.props.dispatch(updatePost(this.state.id, post));
             this.props.history.push("/")
         }
     }
@@ -43,6 +52,7 @@ class AddPost extends React.Component {
             })
         }
     }
+
     handleBodyChange = (e) => {
         if(e.target.value) {
             this.setState({
@@ -57,42 +67,15 @@ class AddPost extends React.Component {
             })
         }
     }
-    handleAuthorChange = (e) => {
-        if(e.target.value) {
-            this.setState({
-                author: e.target.value,
-                authorValid: true
-            })
-        }
-        else {
-            this.setState({
-                author: e.target.value,
-                authorValid: false
-            })
-        }
-    }
-    handleCategoryChange = (e) => {
-        if(e.target.value) {
-            this.setState({
-                category: e.target.value,
-                categoryValid: true
-            })
-        }
-        else {
-            this.setState({
-                category: e.target.value,
-                categoryValid: false
-            })
-        }
-    }
     render() {
         let { categories } = this.props
+
         return (
             <div>
                 <Navbar />
                 <div className="page-section">
                     <div className="page-top">
-                        <h1 className="page-header">Add a Post</h1>
+                        <h1 className="page-header">Edit Post</h1>
                     </div>
                     <Form className="post-form" onSubmit={this.handleSubmit}>
                         <FormGroup>
@@ -105,16 +88,15 @@ class AddPost extends React.Component {
                         </FormGroup>
                         <FormGroup>
                             <Label for="body" className="label-name">Author</Label>
-                            <Input valid={this.state.authorValid} type="text" name="author" id="author" placeholder="Enter author name" value={this.state.author} onChange={this.handleAuthorChange} />
+                            <Input disabled type="text" name="author" id="author" placeholder="Enter author name" value={this.state.author} onChange={this.handleAuthorChange} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="categorySelect" className="label-name">Category</Label>
-                                <Input valid={this.state.categoryValid} type="select" name="select" id="categorySelect" value={this.state.category} onChange={this.handleCategoryChange}>
-                                    <option></option>
-                                    {categories && categories.map(function (category) {
-                                        return (<option key={category.name}>{category.name}</option>)
-                                    })}
-                                </Input>
+                            <Input disabled type="select" name="select" id="categorySelect" value={this.state.category} onChange={this.handleCategoryChange}>
+                                {categories && categories.map(function (category) {
+                                    return (<option key={category.name}>{category.name}</option>)
+                                })}
+                            </Input>
                         </FormGroup>
 
                         <Button id="form-submit-btn">Submit</Button>
@@ -138,4 +120,4 @@ function mapStateToProps(data) {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(AddPost))
+export default withRouter(connect(mapStateToProps)(EditPost))

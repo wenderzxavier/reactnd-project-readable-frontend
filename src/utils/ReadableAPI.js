@@ -26,7 +26,7 @@ export const getPostsCat = (category) =>
         .then((res) => res.json())
         .catch((err) => console.log(err))
 
-export const addPost = (postData) =>
+export const addPostAPI = (postData) =>
     fetch(`${api}/posts`, {
         method: 'POST',
         headers: {
@@ -78,13 +78,13 @@ export const delPost = (id) =>
         .catch((err) => console.log(err))
 
 
-export const getAllComments = (id) =>
+export const getCommentsAPI = (id) =>
     fetch(`${api}/posts/${id}/comments`, { headers })
         .then((res) => res.json())
         .catch((err) => console.log(err))
 
 
-export const addComment = (data) =>
+export const addCommentAPI = (data) =>
     fetch(`${api}/comments`, {
         method: 'POST',
         headers: {

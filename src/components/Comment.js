@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import Timestamp from 'react-timestamp';
 import { withRouter } from 'react-router-dom';
 import { Card, Button, CardBody, CardText } from 'reactstrap';
 import { updateCommentVote, deleteCommentRedux } from '../actions'
-import EditCommentModal from './EditCommentModal'
+import Modal from './Modal'
 
 class Comments extends React.Component {
     vote(id, option) {
@@ -24,7 +24,7 @@ class Comments extends React.Component {
                                 <div className="comment-space">
                                     <CardText>{comment.body}</CardText>
                                     <span className="author">by {comment.author}</span>
-                                    <EditCommentModal comment={comment} />
+                                    <Modal comment={comment} />
                                 </div>
                                 <span className="card-time"><Timestamp time={comment.timestamp} /></span>
                             </div>

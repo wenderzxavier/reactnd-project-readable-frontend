@@ -1,4 +1,4 @@
-import { getAllPosts, getAllCat, addPost, setPostVote, editPost, getAllComments, setCommentVote, editComment, delPost, addComment, editComment } from "../utils/ReadableAPI";
+import { getAllPosts, getAllCat, addPostAPI, setPostVote, editPost, getCommentsAPI, setCommentVote, delPost, addCommentAPI, editComment, delComment } from "../utils/ReadableAPI";
 
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
 export const CHANGE_SORT = "CHANGE_SORT";
@@ -17,13 +17,12 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const POST_COMMENT_UPDATE_ADD = "POST_COMMENT_UPDATE_ADD";
 export const UPDATE_COMMENT = "UPDATE_COMMENT";
 
-
 export const receivePosts = posts => ({
     type: RECEIVE_POSTS,
     posts
 });
 
-export function fetchPOSTS () {
+export function fetchPosts () {
 
     return function (dispatch) {
         return getAllPosts().then(
@@ -62,7 +61,7 @@ function addPost(post) {
 }
 
 export const addPostRedux = post => dispatch =>
-    addPost(post).then(dispatch(addPost(post)));
+    addPostAPI(post).then(dispatch(addPost(post)));
 
 function upVotePost(id) {
     return {

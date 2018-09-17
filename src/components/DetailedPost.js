@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 import Timestamp from 'react-timestamp';
-import Navigation from './Navigation';
+import Navbar from './Navbar';
 import Comments from './Comment'
 import AddComment from './AddComment'
 import { withRouter, Link } from 'react-router-dom'
@@ -34,7 +34,7 @@ class DetailedPost extends Component {
         const { post } = this.state
         return (
             <div>
-                <Navigation />
+                <Navbar />
                 <div className="page-section">
                     <div className="page-top">
                         <h1 className="page-header">Post Details</h1>
