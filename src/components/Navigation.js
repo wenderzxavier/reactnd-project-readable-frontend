@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Collapse, Navbar, NavbarToggler, Nav } from 'reactstrap';
 import { connect } from 'react-redux'
 import  { Link } from 'react-router-dom'
 import logo from '../logo.svg';
 
-class NavigationBar extends Component {
+class Navigation extends React.Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
@@ -22,7 +22,7 @@ class NavigationBar extends Component {
         const selected = this.props.value
         return (
             <div className="nav-class">
-                <NavigationBar color="faded" light expand="md">
+                <Navbar color="faded" light expand="md">
                     <Link to="/" className="navbar-brand">
                     <img src={logo} className="App-logo" width="60" alt="logo" />
                     React Forums
@@ -54,13 +54,14 @@ class NavigationBar extends Component {
                             }))}
                         </Nav>
                     </Collapse>
-                </NavigationBar>
+                </Navbar>
             </div>
         );
     }
 }
 
 function mapStateToProps(data) {
+
     if(data.categories) {
         return {
             categories: data.categories.categories
@@ -71,6 +72,6 @@ function mapStateToProps(data) {
             categories: data.categories
         }
     }
-}
 
-export default connect(mapStateToProps)(NavigationBar)
+}
+export default connect(mapStateToProps)(Navigation)

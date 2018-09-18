@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
-import { fetchPosts, fetchComments } from "../actions"
+import { fetchP, fetchC } from "../actions"
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import AllCategories from '../components/AllCategories';
+import AllCategories from '../components/AllCategories'
 import Category from '../components/Category'
 import AddPost from '../components/AddPost'
 import EditPost from '../components/EditPost'
 import DetailedPost from '../components/DetailedPost'
 import { withRouter } from 'react-router-dom'
-
 
 class App extends Component {
     state = {
@@ -19,8 +18,8 @@ class App extends Component {
         this.getData()
     }
     getData = () => {
-        this.props.dispatch(fetchPosts())
-        this.props.dispatch(fetchComments())
+        this.props.dispatch(fetchP())
+        this.props.dispatch(fetchC())
         this.setState({
             flag: true
         })
@@ -76,5 +75,4 @@ function mapStateToProps(data) {
         }
     }
 }
-
 export default withRouter(connect(mapStateToProps)(App))

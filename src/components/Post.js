@@ -3,22 +3,22 @@ import { Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText } f
 import { connect } from 'react-redux';
 import Timestamp from 'react-timestamp';
 import { withRouter, Link } from 'react-router-dom'
-import { updateVote, fetchComments, fetchPosts, deletePostRedux } from '../actions'
+import { updateVote, fetchC, fetchP, deletePostRedux } from '../actions'
 
 class Post extends Component {
-    componentWillMount() {
-        this.props.dispatch(fetchPosts())
-        this.props.dispatch(fetchComments())
+    componentWillMount () {
+        this.getData()
     }
-
-    vote(id, option) {
+    getData = () => {
+        this.props.dispatch(fetchP())
+        this.props.dispatch(fetchC())
+    }
+    vote (id, option) {
         this.props.dispatch(updateVote(id, option))
     }
-
     deletePost(id) {
         this.props.dispatch(deletePostRedux(id))
     }
-
     render() {
         const { posts } = this.props
         return (
@@ -45,7 +45,7 @@ class Post extends Component {
                             <div className="vote-controls">
                                 <Button className="up-vote" onClick={() => this.vote(post.id, "upVote")}>Upvote</Button>
                                 <Button className="down-vote" onClick={() => this.vote(post.id, "downVote")}>Downvote</Button>
-                                <span className="post-score">Vote Score: {post.voteScore}</span>
+                                <span className="post-score">Score: {post.voteScore}</span>
                             </div>
                             <Link className="post-link" to={`/${post.category}/${post.id}`}><span className="total-comments">{post.commentCount} Comment(s)</span></Link>
                         </CardFooter>
@@ -57,12 +57,12 @@ class Post extends Component {
 
 function mapStateToProps(data, ownProps) {
     let postsData = []
-    if (data.posts) {
+    if(data.posts) {
         postsData = data.posts
 
-        if (ownProps.category) {
-            postsData = postsData.filter((post) => post.category === ownProps.category).sort(function (a, b) {
-                if (data.sort.sortValue === "time") {
+        if(ownProps.category) {
+            postsData = postsData.filter((post) => post.category === ownProps.category ).sort(function (a, b) {
+                if(data.sort.sortValue === "time") {
                     return b.timestamp - a.timestamp
                 }
                 else {
@@ -72,7 +72,7 @@ function mapStateToProps(data, ownProps) {
         }
         else {
             postsData = postsData.sort(function (a, b) {
-                if (data.sort.sortValue === "time") {
+                if(data.sort.sortValue === "time") {
                     return b.timestamp - a.timestamp
                 }
                 else {
@@ -86,5 +86,4 @@ function mapStateToProps(data, ownProps) {
         sort: data.sort.sortValue
     }
 }
-
 export default withRouter(connect(mapStateToProps)(Post))

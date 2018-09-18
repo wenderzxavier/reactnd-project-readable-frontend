@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import Navbar from './Navbar'
+import Navigation from './Navigation'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { updatePost } from '../actions'
-import { getPost } from "../utils/ReadableAPI";
+import { fetchSinglePost } from "../utils/ReadableAPI";
 
 class EditPost extends React.Component {
     state = {
@@ -18,7 +18,7 @@ class EditPost extends React.Component {
     }
 
     componentDidMount() {
-        getPost(this.state.id).then(response => this.setState({
+        fetchSinglePost(this.state.id).then(response => this.setState({
             title: response.title,
             body: response.body,
             author: response.author,
@@ -72,7 +72,7 @@ class EditPost extends React.Component {
 
         return (
             <div>
-                <Navbar />
+                <Navigation />
                 <div className="page-section">
                     <div className="page-top">
                         <h1 className="page-header">Edit Post</h1>

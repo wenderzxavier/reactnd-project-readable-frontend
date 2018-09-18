@@ -27,6 +27,150 @@
   to { transform: rotate(360deg); }
 }
 
-.company-name {
-  line-height: 90px;
+.nav-class {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.page-section {
+  margin: 0 auto;
+  max-width: 900px;
+  padding-top: 40px;
+}
+.page-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.page-header {
+  font-size: 29px;
+  text-align: left;
+  padding-left: 18px;
+  font-weight: 300;
+}
+
+.navbar-light .navbar-brand {
+  font-weight: 500;
+  font-size: 30px;
+}
+
+.card {
+  margin: 40px 20px;
+}
+
+.card-header {
+  text-align: left;
+}
+
+.card-title {
+  text-align: left;
+}
+
+span.author {
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.card-text {
+  text-align: left;
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.post-link {
+  color: black;
+}
+.post-link:hover {
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+}
+.vote-controls {
+  width: 35%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.title-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.post-button {
+  margin-right: 20px;
+}
+.post-form {
+  margin-left: 20px;
+  margin-top: 50px;
+}
+.label-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+#form-submit-btn {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.post-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.detailed-post.card {
+  margin-bottom: 0px;
+}
+.comment-card.card {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.comments-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.comment-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+.comment-edit-btn {
+  margin-left: 30px;
+}
+.comment-space .author {
+  margin-left: 10px;
+}
+.comment-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.comment-score {
+  margin-right: 10px;
+}
+.comment-button {
+  margin-right: 10px;
+}
+.delete-post-btn {
+  margin-left: 10px;
+}
+.comment-form {
+  padding: 30px;
 }

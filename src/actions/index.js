@@ -1,4 +1,4 @@
-import { getAllPosts, getAllCat, addPostAPI, setPostVote, editPost, getCommentsAPI, setCommentVote, delPost, addCommentAPI, editComment, delComment } from "../utils/ReadableAPI";
+import { fetchPosts, fetchCategories, addPostAPI, updateVotePost, updatePostAPI, getCommentsAPI, updateCommentVoteAPI, deleteCommentAPI, deletePostAPI, addCommentAPI, updateCommentAPI } from "../utils/ReadableAPI";
 
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
 export const CHANGE_SORT = "CHANGE_SORT";
@@ -17,15 +17,16 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const POST_COMMENT_UPDATE_ADD = "POST_COMMENT_UPDATE_ADD";
 export const UPDATE_COMMENT = "UPDATE_COMMENT";
 
+
 export const receivePosts = posts => ({
     type: RECEIVE_POSTS,
     posts
 });
 
-export function fetchPosts () {
+export function fetchP () {
 
     return function (dispatch) {
-        return getAllPosts().then(
+        return fetchPosts().then(
             posts => dispatch(receivePosts(posts))
         );
     };
@@ -44,10 +45,10 @@ export const receiveCategories = categories => ({
 });
 
 
-export function fetchComments () {
+export function fetchC () {
 
     return function (dispatch) {
-        return getAllCat().then(
+        return fetchCategories().then(
             categories => dispatch(receiveCategories(categories))
         );
     };
@@ -78,7 +79,7 @@ function downVotePost(id) {
 }
 
 export const updateVote = (id, vote) => dispatch => {
-    setPostVote(id, vote)
+    updateVotePost(id, vote)
     if(vote === "upVote") {
         dispatch(upVotePost(id))
     } else {
@@ -95,13 +96,13 @@ function updatePostRedux(post) {
 
 export function updatePost(id, post) {
     return function(dispatch) {
-        editPost(id, post).then(post => dispatch(updatePostRedux(post)));
+        updatePostAPI(id, post).then(post => dispatch(updatePostRedux(post)));
     };
 }
 
 export function getAllComments(id) {
     return function(dispatch) {
-        getAllComments(id).then(comments => dispatch(receiveComments(comments)));
+        getCommentsAPI(id).then(comments => dispatch(receiveComments(comments)));
     };
 }
 
@@ -127,7 +128,7 @@ function downVoteComment(id) {
 }
 
 export const updateCommentVote = (id, vote) => dispatch => {
-    setCommentVote(id, vote)
+    updateCommentVoteAPI(id, vote)
     if(vote === "upVote") {
         dispatch(upVoteComment(id))
     } else {
@@ -150,7 +151,7 @@ function postCommentUpdateDelete(id) {
 }
 
 export const deleteCommentRedux = id => dispatch =>
-    delComment(id).then(response => {
+    deleteCommentAPI(id).then(response => {
         const parentId = response.parentId;
         dispatch(deleteComment(id))
         dispatch(postCommentUpdateDelete(parentId))
@@ -164,7 +165,7 @@ function deletePost(id) {
 }
 
 export const deletePostRedux = id => dispatch =>
-    delPost(id).then(dispatch(deletePost(id)));
+    deletePostAPI(id).then(dispatch(deletePost(id)));
 
 function postCommentUpdateAdd(id) {
     return {
@@ -181,7 +182,7 @@ function addComment(comment) {
 }
 
 export const addCommentRedux = comment => dispatch =>
-    addComment(comment).then(response => {
+    addCommentAPI(comment).then(response => {
         const parentId = response.parentId;
         comment.voteScore = 1;
         dispatch(addComment(comment))
@@ -197,6 +198,6 @@ function updateComment(comment) {
 
 export function updateCommentRedux(id, comment) {
     return function(dispatch) {
-        editComment(id, comment).then(comment => dispatch(updateComment(comment)));
+        updateCommentAPI(id, comment).then(comment => dispatch(updateComment(comment)));
     };
 }

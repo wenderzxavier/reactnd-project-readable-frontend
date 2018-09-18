@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, Form, FormGroup, Input, Card } from 'reactstrap';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { addCommentRedux } from '../actions'
-import uuidv3 from 'uuid';
 
-class AddComment extends Component {
+const uuidv4 = require("uuid-v4");
+
+class AddComment extends React.Component {
     state = {
         body: '',
         author: '',
         bodyValid: false,
         authorValid: false,
     }
-
     handleSubmit = (e) => {
         e.preventDefault()
         const comment = this.state
         comment.timestamp = Date.now()
-        comment.id = uuidv3();
+        comment.id = uuidv4();
         comment.parentId = this.props.postId
         const valid = this.state.bodyValid && this.state.authorValid;
-        if (valid) {
+        if(valid) {
             this.props.dispatch(addCommentRedux(comment));
             this.setState({
                 body: '',
@@ -30,9 +30,8 @@ class AddComment extends Component {
             })
         }
     }
-
     handleBodyChange = (e) => {
-        if (e.target.value) {
+        if(e.target.value) {
             this.setState({
                 body: e.target.value,
                 bodyValid: true
@@ -45,9 +44,8 @@ class AddComment extends Component {
             })
         }
     }
-
     handleAuthorChange = (e) => {
-        if (e.target.value) {
+        if(e.target.value) {
             this.setState({
                 author: e.target.value,
                 authorValid: true
@@ -78,5 +76,6 @@ class AddComment extends Component {
         );
     }
 }
+
 
 export default withRouter(connect()(AddComment))

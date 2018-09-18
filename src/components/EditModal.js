@@ -1,10 +1,11 @@
 import React from 'react';
+import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Card, Input, Label } from 'reactstrap';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { updateCommentRedux } from '../actions'
-import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Card, Input, Label } from 'reactstrap';
 
-class EditCommentModal extends React.Component {
+
+class EditModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,6 +13,7 @@ class EditCommentModal extends React.Component {
             body: this.props.comment.body,
             bodyValid: true,
         };
+
         this.toggle = this.toggle.bind(this);
     }
     toggle() {
@@ -74,4 +76,4 @@ class EditCommentModal extends React.Component {
     }
 }
 
-export default withRouter(connect()(EditCommentModal));
+export default withRouter(connect()(EditModal));

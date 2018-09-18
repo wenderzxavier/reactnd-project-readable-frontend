@@ -77,9 +77,10 @@ function posts (state = [], action) {
     }
 }
 
-
 function categories (state = [], action) {
+
     const { categories } = action
+
     switch (action.type) {
         case RECEIVE_CATEGORIES:
             return categories;
@@ -141,7 +142,6 @@ function sort(state = {sortValue: "time"}, action) {
             return state
     }
 }
-
 
 export default combineReducers({
     sort,

@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import Navbar from "./Navbar";
+import Navigation from "./Navigation";
 import Post from "./Post";
 import Sort from "./Sort";
 import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom'
 
 class AllCategories extends Component {
-
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navigation/>
                 <div className="page-section">
                     <div className="page-top">
                         <h1 className="page-header">All Posts</h1>
@@ -32,5 +31,4 @@ class AllCategories extends Component {
         );
     }
 }
-
 export default AllCategories;

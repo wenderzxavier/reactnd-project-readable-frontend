@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import Navbar from './Navbar';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { addPostRedux } from '../actions';
-import uuidv3 from 'uuid';
+import Navigation from './Navigation'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { addPostRedux } from '../actions'
+
+const uuidv4 = require("uuid-v4");
 
 class AddPost extends React.Component {
     state = {
@@ -21,7 +22,7 @@ class AddPost extends React.Component {
         e.preventDefault()
         const post = this.state
         post.timestamp = Date.now()
-        post.id = uuidv3();
+        post.id = uuidv4();
         post.voteScore = 0;
         const valid = this.state.titleValid && this.state.bodyValid && this.state.authorValid && this.state.categoryValid;
         if(valid) {
@@ -87,9 +88,10 @@ class AddPost extends React.Component {
     }
     render() {
         let { categories } = this.props
+
         return (
             <div>
-                <Navbar />
+                <Navigation />
                 <div className="page-section">
                     <div className="page-top">
                         <h1 className="page-header">Add a Post</h1>

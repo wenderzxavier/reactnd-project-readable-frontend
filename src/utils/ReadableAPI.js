@@ -1,135 +1,90 @@
-const api = "http://localhost:3001"
+const API = "http://localhost:3001"
 
 // Generate a unique token for the backend server.
 let token = localStorage.token
 if (!token)
     token = localStorage.token = Math.random().toString(36).substr(-8)
 
-const headers = {
-    'Accept': 'application/json',
-    'Authorization': token
+const headers = new Headers({
+    'Authorization': token,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json, text/plain, */*'
+})
+
+export function fetchPosts() {
+    return fetch(`${API}/posts`, { headers: headers })
+        .then(response => response.json())
 }
 
-export const getAllCat = () =>
-    fetch(`${api}/categories`, { headers })
-        .then((res) => res.json())
-        .then((data) => data.categories)
-        .catch((err) => console.log(err))
+export function fetchSinglePost(id) {
+    return fetch(`${API}/posts/${id}`, { headers: headers })
+        .then(response => response.json())
+}
 
-export const getAllPosts = () =>
-    fetch(`${api}/posts`, { headers })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
+export function fetchCategories() {
+    return fetch(`${API}/categories`, { headers: headers })
+        .then(response => response.json())
+}
 
-export const getPostsCat = (category) =>
-    fetch(`${api}/${category}/posts`, { headers })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
+export const addPostAPI = post =>
+    fetch(`${API}/posts`, {
+        method: "post",
+        headers: headers,
+        body: JSON.stringify(post)
+    }).then(res => res.json());
 
-export const addPostAPI = (postData) =>
-    fetch(`${api}/posts`, {
-        method: 'POST',
-        headers: {
-            ...headers,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(postData)
-    })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
-
-export const getPost = (id) =>
-    fetch(`${api}/posts/${id}`, { headers })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
-
-export const setPostVote = (id, vote) =>
-    fetch(`${api}/posts/${id}`, {
-        method: 'POST',
-        headers: {
-            ...headers,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json, text/plain, */*',
-        },
+export const updateVotePost = (postId, vote) =>
+    fetch(`${API}/posts/${postId}`, {
+        method: `post`,
+        headers: headers,
         body: JSON.stringify({ 'option': vote })
-    })
-        .then((res) => { res.json() })
-        .then(data => data)
-        .catch((err) => console.log(err))
+    }).then(res => res.json()).then(data => data)
 
-export const editPost = (id, data) =>
-    fetch(`${api}/posts/${id}`, {
-        method: 'PUT',
-        headers: {
-            ...headers,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
+export const updatePostAPI = (id, post) =>
+    fetch(`${API}/posts/${id}`, {
+        method: "PUT",
+        headers: headers,
+        body: JSON.stringify(post)
+    }).then(res => res.json());
 
-export const delPost = (id) =>
-    fetch(`${api}/posts/${id}`, {
-        method: 'DELETE',
+export function getCommentsAPI(id) {
+    return fetch(`${API}/posts/${id}/comments`, { headers: headers })
+        .then(response => response.json())
+}
+
+export const updateCommentVoteAPI = (commentId, vote) =>
+    fetch(`${API}/comments/${commentId}`, {
+        method: `post`,
+        headers: headers,
+        body: JSON.stringify({ 'option': vote })
+    }).then(res => res.json()).then(data => data)
+
+export const deleteCommentAPI = id =>
+    fetch(`${API}/comments/${id}`, {
+        method: "DELETE",
         headers: headers
     })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
+        .then(res => res.json())
+        .then(data => data);
 
-
-export const getCommentsAPI = (id) =>
-    fetch(`${api}/posts/${id}/comments`, { headers })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
-
-
-export const addCommentAPI = (data) =>
-    fetch(`${api}/comments`, {
-        method: 'POST',
-        headers: {
-            ...headers,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
-
-export const getComment = (id) =>
-    fetch(`${api}/comments/${id}`, { headers })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
-
-export const setCommentVote = (id, vote) =>
-    fetch(`${api}/comments/${id}`, {
-        method: 'POST',
-        headers: {
-            ...headers,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 'option': vote })
-    })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
-
-export const editComment = (id, data) =>
-    fetch(`${api}/comments/${id}`, {
-        method: 'PUT',
-        headers: {
-            ...headers,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json, text/plain, */*'
-        },
-        body: JSON.stringify(data)
-    })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
-
-export const delComment = (id) =>
-    fetch(`${api}/comments/${id}`, {
-        method: 'DELETE',
+export const deletePostAPI = id =>
+    fetch(`${API}/posts/${id}`, {
+        method: "DELETE",
         headers: headers
     })
-        .then((res) => res.json())
-        .catch((err) => console.log(err))
+        .then(res => res.json())
+        .then(data => data);
+
+export const addCommentAPI = comment =>
+    fetch(`${API}/comments`, {
+        method: "post",
+        headers: headers,
+        body: JSON.stringify(comment)
+    }).then(res => res.json());
+
+export const updateCommentAPI = (id, comment) =>
+    fetch(`${API}/comments/${id}`, {
+        method: "PUT",
+        headers: headers,
+        body: JSON.stringify(comment)
+    }).then(res => res.json());
