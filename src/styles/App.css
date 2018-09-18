@@ -130,7 +130,9 @@ span.author {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  background-color: rgb(23, 162, 184);
 }
+
 .detailed-post.card {
   margin-bottom: 0px;
 }

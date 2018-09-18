@@ -2,23 +2,33 @@ import React, { Component } from 'react';
 import Navigation from "./Navigation";
 import Post from "./Post";
 import Sort from "./Sort";
-import { Button } from 'reactstrap';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/LibraryAdd'
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+    extendedIcon: {
+        marginRight: theme.spacing.unit,
+    }
+})
 
 class AllCategories extends Component {
     render() {
+        const { classes } = this.props;
         return (
             <div>
                 <Navigation/>
                 <div className="page-section">
                     <div className="page-top">
-                        <h1 className="page-header">All Posts</h1>
                         <div className="buttons-top">
                             <Link to='/addpost'>
-                                <Button color="secondary" size="md" className="post-button">Add post</Button>
+                                <Button variant="extendedFab" color="primary" aria-label="Delete" className="post-button">
+                                    <AddIcon className={classes.extendedIcon}/> Add Post
+                                </Button>
                             </Link>
-                            <Sort/>
                         </div>
+                        <Sort/>
                     </div>
                     {(this.props.flag)?(
                         <Post/>
@@ -31,4 +41,4 @@ class AllCategories extends Component {
         );
     }
 }
-export default AllCategories;
+export default withStyles(styles)(AllCategories);

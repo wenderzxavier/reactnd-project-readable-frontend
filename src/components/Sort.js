@@ -30,21 +30,21 @@ class Sort extends React.Component {
     render() {
         const {sort} = this.props
         return (
-            <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                <DropdownToggle caret>
+            <ButtonDropdown direction="left" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <DropdownToggle caret color="info">
                     Sort By
                 </DropdownToggle>
                 <DropdownMenu>
                     {(sort === "time")?(
-                        <DropdownItem active>Time</DropdownItem>
+                        <DropdownItem active>Date</DropdownItem>
                     ):(
-                        <DropdownItem onClick={() => this.sortChange()}>Time</DropdownItem>
+                        <DropdownItem onClick={() => this.sortChange()}>Date</DropdownItem>
                     )}
                     <DropdownItem divider />
                     {(sort === "score")?(
-                        <DropdownItem active>Score</DropdownItem>
+                        <DropdownItem active>Vote Score</DropdownItem>
                     ):(
-                        <DropdownItem onClick={() => this.sortChange()}>Score</DropdownItem>
+                        <DropdownItem onClick={() => this.sortChange()}>Vote Score</DropdownItem>
                     )}
                 </DropdownMenu>
             </ButtonDropdown>

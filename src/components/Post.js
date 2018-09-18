@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText } from 'reactstrap';
+import { Card, CardHeader, CardFooter, CardBody, CardTitle, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 import Timestamp from 'react-timestamp';
 import { withRouter, Link } from 'react-router-dom'
@@ -27,10 +27,6 @@ class Post extends Component {
                     <Card key={post.id}>
                         <CardHeader className="post-card-header">
                             <span>{post.category}</span>
-                            <div>
-                                <Link to={`/${post.category}/${post.id}/edit`}><Button color="secondary" size="sm">Edit</Button></Link>
-                                <Button color="secondary" size="sm" className="delete-post-btn" onClick={() => this.deletePost(post.id)}>Delete</Button>
-                            </div>
                         </CardHeader>
                         <CardBody>
                             <Link className="post-link" to={`/${post.category}/${post.id}`}>
@@ -42,11 +38,7 @@ class Post extends Component {
                             </Link>
                         </CardBody>
                         <CardFooter>
-                            <div className="vote-controls">
-                                <Button className="up-vote" onClick={() => this.vote(post.id, "upVote")}>Upvote</Button>
-                                <Button className="down-vote" onClick={() => this.vote(post.id, "downVote")}>Downvote</Button>
                                 <span className="post-score">Score: {post.voteScore}</span>
-                            </div>
                             <Link className="post-link" to={`/${post.category}/${post.id}`}><span className="total-comments">{post.commentCount} Comment(s)</span></Link>
                         </CardFooter>
                     </Card>))) : (<h1>No posts to show</h1>)}

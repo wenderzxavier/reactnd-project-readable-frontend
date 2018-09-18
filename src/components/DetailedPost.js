@@ -7,7 +7,10 @@ import Comments from './Comments'
 import AddComment from './AddComment'
 import { withRouter, Link } from 'react-router-dom'
 import { updateVote, getAllComments, deletePostRedux } from '../actions'
-
+import ThumbUp from '@material-ui/icons/ThumbUp';
+import ThumbDown from '@material-ui/icons/ThumbDown';
+import Delete from '@material-ui/icons/HighlightOff';
+import Edit from '@material-ui/icons/Build'
 
 class DetailedPost extends Component {
 
@@ -39,14 +42,20 @@ class DetailedPost extends Component {
                 <Navigation />
                 <div className="page-section">
                     <div className="page-top">
-                        <h1 className="page-header">Detailed Post View</h1>
+                        <h1 className="page-header">Post #{post.id}</h1>
                     </div>
-                    <Card className="detailed-post">
-                        <CardHeader className="post-card-header">
-                            <span>{post.category}</span>
+                    <Card className="detailed-post" >
+                        <CardHeader>
+                        <span>{post.category}</span>
                             <div className="detailed-post-top-buttons">
-                                <Link to={`/${post.category}/${post.id}/edit`}><Button color="secondary" size="sm">Edit</Button></Link>
-                                <Button color="secondary" size="sm" className="delete-post-btn" onClick={() => this.deletePost(post.id)}>Delete</Button>
+                                <Link to={`/${post.category}/${post.id}/edit`}>
+                                <Button color="warning" size="sm">
+                                    <Edit /> Edit
+                                </Button>
+                                </Link>
+                                <Button color="danger" size="sm" className="delete-post-btn" onClick={() => this.deletePost(post.id)}>
+                                    <Delete />Delete
+                                </Button>
                             </div>
                         </CardHeader>
                         <CardBody>
@@ -59,8 +68,12 @@ class DetailedPost extends Component {
                         <CardFooter>
                             <span className="total-comments">{post.commentCount} Comment(s)</span>
                             <div className="vote-controls">
-                                <Button className="up-vote" onClick={() => this.vote(post.id, "upVote")}>Upvote</Button>
-                                <Button className="down-vote" onClick={() => this.vote(post.id, "downVote")}>Downvote</Button>
+                                <Button variant="extendedFab" onClick={() => this.vote(post.id, "upVote")} color="info" aria-label="Delete" className="post-button">
+                                    <ThumbUp /> UpVote
+                                </Button>
+                                <Button variant="extendedFab" onClick={() => this.vote(post.id, "downVote")} color="danger" aria-label="Delete" className="post-button">
+                                    <ThumbDown /> DownVote
+                                </Button>
                                 <span className="post-score">Score: {post.voteScore}</span>
                             </div>
                         </CardFooter>
