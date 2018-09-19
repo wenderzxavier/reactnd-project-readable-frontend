@@ -6,14 +6,14 @@ import { withRouter, Link } from 'react-router-dom'
 import { updateVote, fetchC, fetchP, deletePostRedux } from '../actions'
 
 class Post extends Component {
-    componentWillMount () {
+    componentWillMount() {
         this.getData()
     }
     getData = () => {
         this.props.dispatch(fetchP())
         this.props.dispatch(fetchC())
     }
-    vote (id, option) {
+    vote(id, option) {
         this.props.dispatch(updateVote(id, option))
     }
     deletePost(id) {
@@ -27,6 +27,10 @@ class Post extends Component {
                     <Card key={post.id}>
                         <CardHeader className="post-card-header">
                             <span>{post.category}</span>
+                            <div>
+                                <Link to={`/${post.category}/${post.id}/edit`}><Button color="secondary" size="sm">Edit</Button></Link>
+                                <Button color="secondary" size="sm" className="delete-post-btn" onClick={() => this.deletePost(post.id)}>Delete</Button>
+                            </div>
                         </CardHeader>
                         <CardBody>
                             <Link className="post-link" to={`/${post.category}/${post.id}`}>
@@ -38,7 +42,11 @@ class Post extends Component {
                             </Link>
                         </CardBody>
                         <CardFooter>
+                            <div className="vote-controls">
+                                <Button className="up-vote" onClick={() => this.vote(post.id, "upVote")}>Upvote</Button>
+                                <Button className="down-vote" onClick={() => this.vote(post.id, "downVote")}>Downvote</Button>
                                 <span className="post-score">Score: {post.voteScore}</span>
+                            </div>
                             <Link className="post-link" to={`/${post.category}/${post.id}`}><span className="total-comments">{post.commentCount} Comment(s)</span></Link>
                         </CardFooter>
                     </Card>))) : (<h1>No posts to show</h1>)}
@@ -49,12 +57,12 @@ class Post extends Component {
 
 function mapStateToProps(data, ownProps) {
     let postsData = []
-    if(data.posts) {
+    if (data.posts) {
         postsData = data.posts
 
-        if(ownProps.category) {
-            postsData = postsData.filter((post) => post.category === ownProps.category ).sort(function (a, b) {
-                if(data.sort.sortValue === "time") {
+        if (ownProps.category) {
+            postsData = postsData.filter((post) => post.category === ownProps.category).sort(function (a, b) {
+                if (data.sort.sortValue === "time") {
                     return b.timestamp - a.timestamp
                 }
                 else {
@@ -64,7 +72,7 @@ function mapStateToProps(data, ownProps) {
         }
         else {
             postsData = postsData.sort(function (a, b) {
-                if(data.sort.sortValue === "time") {
+                if (data.sort.sortValue === "time") {
                     return b.timestamp - a.timestamp
                 }
                 else {
