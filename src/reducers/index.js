@@ -19,7 +19,7 @@ import {
     UPDATE_COMMENT
 } from '../actions'
 
-function posts (state = [], action) {
+function posts(state = [], action) {
 
     const { posts, post, id } = action
 
@@ -31,7 +31,10 @@ function posts (state = [], action) {
         case UP_VOTE_POST:
             let postupvote = state.map(p => {
                 if (p.id === id) {
-                    ++p.voteScore;
+                    return {
+                        ...p,
+                        voteScore: p.voteScore + 1
+                    };
                 }
                 return p;
             });
@@ -39,15 +42,22 @@ function posts (state = [], action) {
         case DOWN_VOTE_POST:
             let postdownvote = state.map(p => {
                 if (p.id === id) {
-                    --p.voteScore;
+                    return {
+                        ...p,
+                        voteScore: p.voteScore - 1
+                    };
                 }
                 return p;
             });
             return postdownvote;
         case UPDATE_POST_REDUX:
             let newpost = state.map(p => {
-                if (p.id === post.id) {
-                    p = post;
+                if (p.id === post.id){
+                    return {
+                        ...p,
+                        title: post.title,
+                        body: post.body
+                    };
                 }
                 return p;
             });
@@ -55,7 +65,10 @@ function posts (state = [], action) {
         case POST_COMMENT_UPDATE_DELETE:
             let updatedpostdelete = state.map(p => {
                 if (p.id === id) {
-                    p.commentCount--;
+                    return {
+                        ...p,
+                        commentCount: p.commentCount - 1
+                    };
                 }
                 return p;
             });
@@ -66,7 +79,10 @@ function posts (state = [], action) {
         case POST_COMMENT_UPDATE_ADD:
             let updatedpostadd = state.map(p => {
                 if (p.id === id) {
-                    p.commentCount++;
+                    return {
+                        ...p,
+                        commentCount: p.commentCount - 1
+                    };
                 }
                 return p;
             });
@@ -77,7 +93,7 @@ function posts (state = [], action) {
     }
 }
 
-function categories (state = [], action) {
+function categories(state = [], action) {
 
     const { categories } = action
 
@@ -90,7 +106,7 @@ function categories (state = [], action) {
 }
 
 function comments(state = [], action) {
-    const {comments, comment, id} = action;
+    const { comments, comment, id } = action;
     switch (action.type) {
         case RECEIVE_COMMENTS: {
             return comments;
@@ -98,7 +114,10 @@ function comments(state = [], action) {
         case UP_VOTE_COMMENT:
             let commentupvote = state.map(c => {
                 if (c.id === id) {
-                    ++c.voteScore;
+                    return {
+                        ...c,
+                        voteScore: c.voteScore + 1
+                    };
                 }
                 return c;
             });
@@ -106,7 +125,10 @@ function comments(state = [], action) {
         case DOWN_VOTE_COMMENT:
             let commentdownvote = state.map(c => {
                 if (c.id === id) {
-                    --c.voteScore;
+                    return {
+                        ...c,
+                        voteScore: c.voteScore - 1
+                    };
                 }
                 return c;
             });
@@ -119,7 +141,10 @@ function comments(state = [], action) {
         case UPDATE_COMMENT:
             let newcomment = state.map(c => {
                 if (c.id === comment.id) {
-                    c = comment;
+                    return {
+                        ...c,
+                        body: comment.body
+                    }
                 }
                 return c;
             });
@@ -129,7 +154,7 @@ function comments(state = [], action) {
     }
 }
 
-function sort(state = {sortValue: "time"}, action) {
+function sort(state = { sortValue: "time" }, action) {
     const { sortValue } = action
 
     switch (action.type) {

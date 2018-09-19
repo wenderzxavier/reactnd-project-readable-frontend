@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardFooter, CardBody, CardTitle, CardText } from 'reactstrap';
+import { Card, CardHeader, CardFooter, CardBody, CardTitle, CardText, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import Timestamp from 'react-timestamp';
 import { withRouter, Link } from 'react-router-dom'
 import { updateVote, fetchC, fetchP, deletePostRedux } from '../actions'
+import ThumbUp from '@material-ui/icons/ThumbUp';
+import ThumbDown from '@material-ui/icons/ThumbDown';
 
 class Post extends Component {
     componentWillMount() {
@@ -43,8 +45,8 @@ class Post extends Component {
                         </CardBody>
                         <CardFooter>
                             <div className="vote-controls">
-                                <Button className="up-vote" onClick={() => this.vote(post.id, "upVote")}>Upvote</Button>
-                                <Button className="down-vote" onClick={() => this.vote(post.id, "downVote")}>Downvote</Button>
+                                <Button className="up-vote" color="info" onClick={() => this.vote(post.id, "upVote")}> <ThumbUp/> Upvote</Button>
+                                <Button className="down-vote" color="danger" onClick={() => this.vote(post.id, "downVote")}><ThumbDown /> Downvote</Button>
                                 <span className="post-score">Score: {post.voteScore}</span>
                             </div>
                             <Link className="post-link" to={`/${post.category}/${post.id}`}><span className="total-comments">{post.commentCount} Comment(s)</span></Link>

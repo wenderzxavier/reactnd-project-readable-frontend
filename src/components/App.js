@@ -9,6 +9,7 @@ import AddPost from '../components/AddPost'
 import EditPost from '../components/EditPost'
 import DetailedPost from '../components/DetailedPost'
 import { withRouter } from 'react-router-dom'
+import PageNotFound from './PageNotFound'
 
 class App extends Component {
     state = {
