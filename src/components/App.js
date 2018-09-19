@@ -55,6 +55,7 @@ class App extends Component {
                   )} />
               ))
           )}
+              <Route path='*' component={PageNotFound} />
           </Switch>
       </div>
     )
